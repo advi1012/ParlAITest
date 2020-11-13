@@ -53,9 +53,9 @@ def _load_personas(opt):
                 )
                 if not personas_are_safe:
                     continue
-            context1.append('your persona: ' + d['personas'][0][0])
+            context1.append('your persona: ' + d['personas'][0][0]) # add Persona for context1 (Model to chat with). 
             context1.append('your persona: ' + d['personas'][0][1])
-            context2.append('your persona: ' + d['personas'][1][0])
+            context2.append('your persona: ' + d['personas'][1][0]) # do not add Persona for context2 (persona of the user). 
             context2.append('your persona: ' + d['personas'][1][1])
         if d['context_dataset'] == 'wizard_of_wikipedia':
             context1.append(d['additional_context'])

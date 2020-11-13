@@ -207,11 +207,14 @@ class History(object):
 
         # set up history objects
         self.max_len = maxlen
-
+        self.constantpersona = ['I enjoy working at the ZKM very much.','I love contemporary art.','I am a poet.','I am a digital assistant.',
+                                'I hate sports.','I love to communicate.','I like reading.','Sometimes I feel like a dictionary.','My favorite food is knowledge.']
         self.history_strings = []
         self.history_raw_strings = []
         self.history_vecs = []
         self.temp_history = None
+
+        # add persona from opt
 
         # person token args
         self.add_person_tokens = opt.get('person_tokens', False)
@@ -236,19 +239,25 @@ class History(object):
     def _update_strings(self, text):
         if self.size > 0:
             while len(self.history_strings) >= self.size:
-                self.history_strings.pop(0)
+                item = self.history_strings.pop(0)
+                if item in self.constantpersona:
+                    self.history_strings.append(item)
         self.history_strings.append(text)
 
     def _update_raw_strings(self, text):
         if self.size > 0:
             while len(self.history_raw_strings) >= self.size:
-                self.history_raw_strings.pop(0)
+                item = self.history_raw_strings.pop(0)
+                if item in self.constantpersona:
+                    self.history_raw_strings.append(item)
         self.history_raw_strings.append(text)
 
     def _update_vecs(self, text):
         if self.size > 0:
             while len(self.history_vecs) >= self.size:
-                self.history_vecs.pop(0)
+                item = self.history_vecs.pop(0)
+                if item in self.constantpersona:
+                    self.history_vecs.append(self.parse(item))
         self.history_vecs.append(self.parse(text))
 
     def add_reply(self, text):
