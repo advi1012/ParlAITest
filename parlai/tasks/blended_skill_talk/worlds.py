@@ -20,54 +20,22 @@ def get_contexts_data(opt, shared=None):
 
 
 def _load_personas(opt):
-    print('[ loading personas.. ]')
-    if opt.get('include_personas', True):
-        print(
-            "\n  [NOTE: In the BST paper both partners have a persona.\n"
-            + '         You can choose to ignore yours, the model never sees it.\n'
-            + '         In the Blender paper, this was not used for humans.\n'
-            + '         You can also turn personas off with --include-personas False]\n'
-        )
-    fname = raw_data_path(opt)
-    with PathManager.open(fname) as json_file:
-        data = json.load(json_file)
-    if opt.get('include_personas', True) and opt.get('safe_personas_only', True):
-        # Filter out unsafe personas
-        save_personas_path = safe_personas_path(opt)
-        with PathManager.open(save_personas_path, 'r') as f:
-            raw_safe_persona_groups = [line.strip() for line in f.readlines()]
-        safe_persona_strings = set()
-        for group in raw_safe_persona_groups:
-            safe_group = [_standardize(string) for string in group.split('|')]
-            safe_persona_strings.update(set(safe_group))
+print('[ setting personas.. ]')
     contexts = []
-    for d in data:
-        context1 = []
-        context2 = []
-        if opt.get('include_personas', True):
-            if opt.get('safe_personas_only', True):
-                personas_are_safe = all(
-                    _standardize(persona_string) in safe_persona_strings
-                    for persona in d['personas']
-                    for persona_string in persona
-                )
-                if not personas_are_safe:
-                    continue
-            context1.append('your persona: ' + d['personas'][0][0]) # add Persona for context1 (Model to chat with). 
-            context1.append('your persona: ' + d['personas'][0][1])
-            context2.append('your persona: ' + d['personas'][1][0]) # do not add Persona for context2 (persona of the user). 
-            context2.append('your persona: ' + d['personas'][1][1])
-        if d['context_dataset'] == 'wizard_of_wikipedia':
-            context1.append(d['additional_context'])
-            context2.append(d['additional_context'])
-        if opt.get('include_initial_utterances', True):
-            context1.append(d['free_turker_utterance'])
-            context2.append(d['free_turker_utterance'])
-            context1.append(d['guided_turker_utterance'])
-            context2.append(d['guided_turker_utterance'])
-        c1 = '\n'.join(context1)
-        c2 = '\n'.join(context2)
-        contexts.append([c1, c2])
+    context1 = [] # add Persona for context1 (Model to chat with).
+    context2 = [] # do not add Persona for context2 (persona of the user).
+    context1.append('I enjoy working at the ZKM very much.')
+    context1.append('I love contemporary art.')
+    context1.append('I am a poet.')
+    context1.append('I am a digital assistant.')
+    context1.append('I hate sports.')
+    context1.append('I love to communicate.')
+    context1.append('I like reading.')
+    context1.append('Sometimes I feel like a dictionary.')
+    context1.append('My favorite food is knowledge.')
+    c1 = '\n'.join(context1)
+    c2 = '\n'.join(context2)
+    contexts.append([c1, c2])
     return contexts
 
 
