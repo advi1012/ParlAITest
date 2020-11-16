@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\parlai",
+    "\\parlai\\core",
+    "\\parlai\\tasks",
+    "\\parlai\\tasks\\blended_skill_talk",
+    "\\parlai\\tasks\\interactive",
+    "\\website\\templates"
+  ],
+  "SelectedNode": "\\parlai\\core\\torch_agent.py",
+  "PreviewInSolutionExplorer": false
+}

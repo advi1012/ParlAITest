@@ -20,7 +20,7 @@ def get_contexts_data(opt, shared=None):
 
 
 def _load_personas(opt):
-print('[ setting personas.. ]')
+    print('[ loading personas.. ]')
     contexts = []
     context1 = [] # add Persona for context1 (Model to chat with).
     context2 = [] # do not add Persona for context2 (persona of the user).
